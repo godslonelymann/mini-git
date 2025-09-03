@@ -39,15 +39,22 @@ let command = &vcs_args[1];
 
     println!("Message: {} command is running!", command);
 
-    let add_args: Vec<String> = env::args().collect();
+    let add_args: Vec<String> = env::args().skip(2).collect();
     
-    let rest_args = &add_args[2..];
+    // let rest_args = &add_args[2..];
 
-    println!("\nStaging -> \n");
-    for arg in rest_args {
-        
-        println!("- {} \n", arg);
+    if add_args.len() == 0 {
+        println!("No file names present!");
     }
+
+   for file in add_args {
+    let path = Path::new(&file);
+    if path.exists() {
+        println!("✅{} exists!", file);
+    } else {
+        println!("❌{} does not exist!", file);
+    }
+   }
 
  } else {
      println!("Unknown command: {}", command);
